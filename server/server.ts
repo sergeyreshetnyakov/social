@@ -26,10 +26,6 @@ mongoose.connection.on('disconnected', () => {
   console.log('[INFO] MongoDB is disconnected')
 })
 
-app.get('/', (req, res) => {
-  res.send('Hello, World')
-})
-
 app.listen(app.get('port'), () => {
   console.log('[OK] Server is running on http://localhost:' + app.get('port'))
 })
