@@ -1,8 +1,9 @@
 import { hash, compare } from 'bcrypt'
 import { sign } from 'jsonwebtoken'
-
-import User from '../models/User'
 import { Router } from 'express'
+
+import User from '../models/User.ts'
+import verifyToken from '../middlewares/auth.ts'
 
 const router = new Router()
 
@@ -51,7 +52,7 @@ router.post('/login', async (req, res) => {
   }
 })
 
-router.get('/', verifyToken, (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email })
     if (!user) {
@@ -71,3 +72,4 @@ router.get('/', verifyToken, (req, res) => {
 //   await User.findByIdAndDelete(req.params.id, req.body)
 //   res.status(200)
 // })
+export default router

@@ -4,6 +4,9 @@ import morgan from 'morgan'
 import mongoose from 'mongoose'
 import cors from 'cors'
 
+import PostsRouter from './routes/Posts.ts'
+import UsersRouter from './routes/Users.ts'
+
 const app = express()
 
 dotenv.config()
@@ -25,6 +28,9 @@ mongoose.connection.on('error', (err) => {
 mongoose.connection.on('disconnected', () => {
   console.log('[INFO] MongoDB is disconnected')
 })
+
+app.use('/api/posts', PostsRouter)
+app.use('/api/users', UsersRouter)
 
 app.listen(app.get('port'), () => {
   console.log('[OK] Server is running on http://localhost:' + app.get('port'))

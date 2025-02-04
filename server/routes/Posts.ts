@@ -1,7 +1,8 @@
+import { Router } from 'express'
+
 import Post from '../models/Post.ts'
 import Comment from '../models/Comment.ts'
-import verifyToken from '../middlewares/auth'
-import { Router } from 'express'
+import verifyToken from '../middlewares/auth.ts'
 
 const router = new Router()
 

@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose'
-import CommentSchema from './Comment.ts'
+import { CommentSchema } from './Comment.ts'
 
 export const PostSchema = new Schema({
   author: String,
