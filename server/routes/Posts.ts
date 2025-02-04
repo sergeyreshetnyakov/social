@@ -1,7 +1,8 @@
 import { Router } from 'express'
 
-import Post from '../models/Post.ts'
 import Comment from '../models/Comment.ts'
+import Post from '../models/Post.ts'
+import User from '../models/User.ts'
 import verifyToken from '../middlewares/auth.ts'
 
 const router = new Router()
@@ -12,7 +13,7 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/:author', async (req, res) => {
-  await Post.findMany({ author: req.params.author })
+  res.json(await Post.findMany({ author: req.params.author }))
 })
 
 router.get('/:id', async (req, res) => {

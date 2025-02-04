@@ -8,68 +8,49 @@ import verifyToken from '../middlewares/auth.ts'
 const router = new Router()
 
 router.post('/register', async (req, res) => {
-  try {
-    const existingEmail = await User.findOne({ email: req.body.email })
-    const existingUsername = await User.findOne({ username: req.body.username })
+  const existingEmail = await User.findOne({ email: req.body.email })
+  const existingUsername = await User.findOne({ username: req.body.username })
 
-    if (existingEmail) {
-      return res.status(400).json({ error: 'Email already exist' })
-    }
-
-    if (existingUsername) {
-      return res.status(400).json({ error: 'Username already exist' })
-    }
-
-    const hashedPassword = await hash(req.body.password, 10)
-    const user = new User({
-      username: req.body.username,
-      password: hashedPassword,
-      email: req.body.email,
-    })
-
-    await user.save()
-    res.status(201)
-  } catch (error) {
-    res.status(500)
+  if (existingEmail) {
+    return res.status(400).json({ error: 'Email already exist' })
   }
+
+  if (existingUsername) {
+    return res.status(400).json({ error: 'Username already exist' })
+  }
+
+  const hashedPassword = await hash(req.body.password, 10)
+  const user = new User({
+    username: req.body.username,
+    password: hashedPassword,
+    email: req.body.email,
+  })
+
+  await user.save()
+  res.status(201)
 })
 
 router.post('/login', async (req, res) => {
-  try {
-    const user = await User.findOne(req.body.email)
-    if (!user) {
-      return res.status(401)
-    }
-
-    const passwordMatch = await compare(req.body.password, user.password)
-    if (!passwordMatch) {
-      return res.status(401)
-    }
-    const token = sign({ email: user.email }, 'secret')
-    res.status(200).json({ token })
-  } catch (error) {
-    res.status(500)
+  const user = await User.findOne(req.body.email)
+  if (!user) {
+    return res.status(401)
   }
+
+  const passwordMatch = await compare(req.body.password, user.password)
+  if (!passwordMatch) {
+    return res.status(401)
+  }
+  const token = sign({ email: user.email }, 'secret')
+  res.status(200).json({ token })
 })
 
 router.get('/', verifyToken, async (req, res) => {
-  try {
-    const user = await User.findOne({ email: req.body.email })
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' })
-    }
+  const user = await User.findOne({ email: req.body.email })
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' })
+  }
 
-    res.status(200).json({ username: user.username, email: user.email })
-  } catch (error) {}
+  res.status(200).json({ username: user.username, email: user.email })
 })
 
-// router.put('/:id', async (req, res) => {
-//   await User.findByIdAndUpdate(req.id, req.body)
-//   res.status(202)
-// })
-
-// router.delete('/:id', async (req, res) => {
-//   await User.findByIdAndDelete(req.params.id, req.body)
-//   res.status(200)
-// })
 export default router
