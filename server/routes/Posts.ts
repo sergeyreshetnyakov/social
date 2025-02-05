@@ -2,66 +2,81 @@ import { Router } from 'express'
 
 import Comment from '../models/Comment.ts'
 import Post from '../models/Post.ts'
-import User from '../models/User.ts'
 import verifyToken from '../middlewares/auth.ts'
 
-const router = new Router()
+const router = Router()
 
-//posts routing
+//post routing
 router.get('/', async (req, res) => {
   res.json(await Post.find())
 })
 
-router.get('/:author', async (req, res) => {
-  res.json(await Post.findMany({ author: req.params.author }))
-})
-
 router.get('/:id', async (req, res) => {
-  res.json(await Post.findById(req.params.id))
+  const post = await Post.findById(req.params.id)
+
+  if (post) {
+    return res.status(200).json(post)
+  } else {
+    return res.status(404).json({ message: 'Post not found' })
+  }
 })
 
 router.post('/', verifyToken, async (req, res) => {
-  const post = new Post(req.body)
+  const post = new Post({
+    author: req.user.username,
+    title: req.body.title,
+    content: req.body.content,
+    date: Date.now(),
+    hidden: req.body.hidden,
+    comments: [],
+    rating: 0,
+  })
+
   await post.save()
-  res.status(201)
+  res.status(201).json({ message: 'success' })
 })
 
 router.put('/:id', verifyToken, async (req, res) => {
-  await Post.findByIdAndUpdate(req.params.id, req.body)
-  res.status(202)
-})
+  const post = await Post.findById(req.params.id)
 
+  if (post) {
+    if (post.author === req.user.username) {
+      await Post.findByIdAndUpdate(req.params.id, req.body)
+      return res.status(200).json({ message: 'success' })
+    }
+  } else {
+    return res.status(404).json({ message: 'Post not found' })
+  }
+})
 router.delete('/:id', verifyToken, async (req, res) => {
-  await Post.findByIdAndDelete(req.params.id)
-  res.status(200)
+  const post = await Post.findById(req.params.id)
+  if (post) {
+    if (post?.author === req.user.username) {
+      await Post.findByIdAndDelete(req.params.id)
+      return res.status(200).json({ message: 'success' })
+    }
+  } else {
+    return res.status(404).json({ error: 'Post no found' })
+  }
 })
 
-//comments routing
-router.post('/:id/comments', verifyToken, async (req, res) => {
-  const comment = new Comment(req.body)
+//comment routing
+
+router.post('/:id', verifyToken, async (req, res) => {
+  const comment = new Comment({
+    author: req.user.username,
+    content: req.body.content,
+    date: Date.now(),
+    rating: 0,
+  })
+
   const post = await Post.findById(req.params.id)
 
-  post.comments.push(comment)
-  await post.save()
-
-  res.status(201)
+  if (post) {
+    post?.comments.push(comment)
+    await Post.findByIdAndUpdate(req.params.id, post)
+    return res.status(201).json({ message: 'success' })
+  } else {
+    return res.status(404).json({ error: 'Post no found' })
+  }
 })
-
-router.put('/:id/comments/:commentId', verifyToken, async (req, res) => {
-  const post = await Post.findById(req.params.id)
-
-  await post.comments.findByIdAndUpdate(req.params.comments, req.body)
-  await post.save()
-
-  res.status(202)
-})
-
-router.delete('/:id/comments/:commentId', verifyToken, async (req, res) => {
-  const post = await Post.findById(req.params.id)
-  await post.comments.findByIdAndDelete(req.params.commentId)
-  await post.save()
-
-  res.status(200)
-})
-
-export default router
