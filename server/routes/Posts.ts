@@ -36,23 +36,24 @@ router.post('/', verifyToken, async (req, res) => {
 
 router.post('/:id/rating', verifyToken, async (req, res) => {
   const post = await Post.findById(req.params.id)
-  console.log(req.user.username)
+
   if (!post) {
     return res.status(404).json({ message: 'Post not found' })
   }
 
-  if (post.rating.includes(req.user.username)) {
-    post.rating = post.rating.filter((p) => {
-      return p !== req.user.username
-    })
+  if (!post.rating.includes(req.user.username)) {
+    post.rating.push(req.user.username)
     await Post.findByIdAndUpdate(req.params.id, post)
-    return res.status(200).json({ message: 'rating decrimented by ' + req.user.username })
+
+    return res.status(200).json({ message: 'rating increased by ' + req.user.username })
+  } else {
+    post.rating = post.rating.filter((r) => {
+      return r !== req.user.username
+    })
+
+    await Post.findByIdAndUpdate(req.params.id, post)
+    return res.status(200).json({ message: 'rating decreased by ' + req.user.username })
   }
-
-  post.rating = post.rating.push(req.user.username)
-  await Post.findByIdAndUpdate(req.params.id, post)
-
-  return res.status(200).json({ message: 'rating increased by ' + req.user.username })
 })
 
 router.put('/:id', verifyToken, async (req, res) => {
@@ -88,7 +89,7 @@ router.post('/:id/comments', verifyToken, async (req, res) => {
     author: req.user.username,
     content: req.body.content,
     date: Date.now(),
-    rating: 0,
+    rating: [],
   })
 
   const post = await Post.findById(req.params.id)
