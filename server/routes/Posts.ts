@@ -3,6 +3,7 @@ import { Router } from 'express'
 import Comment from '../models/Comment.ts'
 import Post from '../models/Post.ts'
 import verifyToken from '../middlewares/auth.ts'
+import { ObjectId } from 'mongoose'
 
 const router = Router()
 
@@ -70,6 +71,7 @@ router.put('/:id', verifyToken, async (req, res) => {
   await Post.findByIdAndUpdate(req.params.id, req.body)
   res.status(200).json({ message: 'success' })
 })
+
 router.delete('/:id', verifyToken, async (req, res) => {
   const post = await Post.findById(req.params.id)
 
@@ -103,7 +105,5 @@ router.post('/:id/comments', verifyToken, async (req, res) => {
 
   res.status(201).json({ message: 'success' })
 })
-
-router.post('/:id/comments/:commentId')
 
 export default router

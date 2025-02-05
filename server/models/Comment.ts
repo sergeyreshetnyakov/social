@@ -3,7 +3,7 @@ import { Schema, model } from 'mongoose'
 export const CommentSchema = new Schema({
   author: String,
   content: String,
-  rating: Number,
+  rating: Array,
   date: Date,
 })
 
