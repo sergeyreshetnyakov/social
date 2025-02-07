@@ -1,12 +1,12 @@
-import './assets/main.css'
+import './shared/main.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
-import App from './App.vue'
-import router from './router'
+import HomeLayout from './pages/HomeLayout.vue'
+import router from './app/router.ts'
 
-const app = createApp(App)
+const app = createApp(HomeLayout)
 
 app.use(createPinia())
 app.use(router)

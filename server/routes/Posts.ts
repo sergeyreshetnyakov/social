@@ -3,21 +3,22 @@ import { Router } from 'express'
 import Comment from '../models/Comment.ts'
 import Post from '../models/Post.ts'
 import verifyToken from '../middlewares/auth.ts'
-import { ObjectId } from 'mongoose'
 
 const router = Router()
 
 //post routing
-router.get('/:id', async (req, res) => {
-  if (req.params.id) {
-    const post = await Post.findById(req.params.id)
 
-    if (!post) {
-      return res.status(404).json({ message: 'Post not found' })
-    }
-    return res.status(200).json(post)
+router.get('/', async (req, res) => {
+  res.status(200).json(await Post.find())
+})
+
+router.get('/id/:id', async (req, res) => {
+  const post = await Post.findById(req.params.id)
+  if (!post) {
+    return res.status(404).json({ message: 'Post not found' })
   }
-  res.json(await Post.find())
+
+  return res.status(200).json(post)
 })
 
 router.post('/', verifyToken, async (req, res) => {

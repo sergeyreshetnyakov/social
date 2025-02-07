@@ -1,0 +1,18 @@
+@import 'primeicons/primeicons.css';
+@import 'tailwindcss';
+
+@layer base {
+  body {
+    @apply mx-[25vw];
+  }
+
+  nav {
+    @apply flex justify-between gap-4 my-[2vh];
+  }
+
+  a {
+    @apply font-semibold text-xl underline underline-offset-3 
+    decoration-[1.5px] decoration-white 
+    duration-300 ease-in-out hover:decoration-zinc-800;
+  }
+}
