@@ -22,7 +22,7 @@ export interface ICreatePost {
 
 export interface IPost extends ICreatePost {
   author: string
-  date: Date
+  date: string
   rating: Array<string>
   comments: Array<IComment>
   _id: string
@@ -31,8 +31,8 @@ export interface IPost extends ICreatePost {
 const usePostStore = defineStore('post', (store) => {
   const authToken = ref<string>()
 
-  async function getAll(): Promise<Array<IPost>> {
-    const res = await axios.get(url)
+  async function getAll(): Promise<IPost[]> {
+    const res = await axios.get<IPost[]>(url)
 
     return res.data
   }

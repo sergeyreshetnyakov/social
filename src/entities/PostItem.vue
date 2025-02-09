@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import usePostStore from '@/features/PostStore'
-import useUserStore from '@/features/UserStore'
-import type { IPost } from '@/features/PostStore'
+import usePostStore from '@/features/postStore'
+import useUserStore from '@/features/userStore'
+import type { IPost } from '@/features/postStore'
 import { ref } from 'vue'
 
 const postStore = usePostStore()
@@ -14,25 +14,41 @@ if (postStore.authToken && userStore.userData) {
     isLiked.value = true
   }
 }
+
+const date = new Date(post.date).toString().split(' ').slice(0, -5).toString().replaceAll(',', ' ')
+
+function updateRating() {
+  postStore.updateRating(post._id)
+  console.log('popa')
+}
 </script>
 
 <template>
-  <div>
-    <RouterLink to="/">{{ post.author }}</RouterLink>
-    <h3>{{ post.title }}</h3>
-    <p>{{ post.content }}</p>
-    <div class="flex justify-center">
-      <div class="flex gap-4">
-        <span>{{ post.rating.length }}</span>
-        <button @click="() => postStore.updateRating(post._id)">
-          <i :class="isLiked ? 'pi pi-heart-fill text-red-400' : 'pi pi-heart'"></i>
-        </button>
-        <RouterLink to="/">
-          <span>{{ post.comments.length }}</span>
-          <i class="pi pi-comment"></i>
-        </RouterLink>
-      </div>
-      <span>{{ post.date.toDateString() }}</span>
+  <div class="flex gap-4 my-4">
+    <h3 class="text-xl font-medium">{{ post.title }}</h3>
+    <RouterLink
+      class="text-base font-medium text-zinc-500 my-auto no-underline hover:text-zinc-800"
+      to="/"
+    >
+      {{ post.author }}
+    </RouterLink>
+  </div>
+  <p>{{ post.content }}</p>
+  <div class="flex gap-2 mt-2">
+    <button @click="updateRating" class="flex gap-2 button-inline hover:bg-rose-300">
+      <i
+        :class="
+          isLiked ? 'pi pi-heart-fill text-rose-800 text-xl my-auto' : 'pi pi-heart text-xl my-auto'
+        "
+      ></i>
+      <span class="text-xl font-semibold">{{ post.rating.length }}</span>
+    </button>
+    <RouterLink class="flex gap-2 button-inline hover:bg-blue-300" to="/">
+      <i class="pi pi-comment text-xl my-auto"></i>
+      <span class="text-xl font-semibold">{{ post.comments.length }}</span>
+    </RouterLink>
+    <div class="flex ml-auto gap-1">
+      <span class="font-medium text-zinc-700">{{ date }}</span>
     </div>
   </div>
 </template>

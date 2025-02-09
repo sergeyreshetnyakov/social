@@ -9,16 +9,19 @@ const router = Router()
 //post routing
 
 router.get('/', async (req, res) => {
-  res.status(200).json(await Post.find())
+  const post = await Post.find()
+
+  res.status(200).json(post)
 })
 
 router.get('/id/:id', async (req, res) => {
   const post = await Post.findById(req.params.id)
+
   if (!post) {
     return res.status(404).json({ message: 'Post not found' })
   }
 
-  return res.status(200).json(post)
+  res.status(200).json(post)
 })
 
 router.post('/', verifyToken, async (req, res) => {
