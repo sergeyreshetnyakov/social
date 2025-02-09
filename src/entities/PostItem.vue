@@ -1,30 +1,5 @@
-<script setup lang="ts">
-import usePostStore from '@/features/postStore'
-import useUserStore from '@/features/userStore'
-import type { IPost } from '@/features/postStore'
-import { ref } from 'vue'
-
-const postStore = usePostStore()
-const userStore = useUserStore()
-const post = defineProps<IPost>()
-const isLiked = ref<boolean>(false)
-
-if (postStore.authToken && userStore.userData) {
-  if (post.rating.includes(userStore.userData.username)) {
-    isLiked.value = true
-  }
-}
-
-const date = new Date(post.date).toString().split(' ').slice(0, -5).toString().replaceAll(',', ' ')
-
-function updateRating() {
-  postStore.updateRating(post._id)
-  console.log('popa')
-}
-</script>
-
 <template>
-  <div class="flex gap-4 my-4">
+  <div class="flex gap-4 mt-4 mb-2">
     <h3 class="text-xl font-medium">{{ post.title }}</h3>
     <RouterLink
       class="text-base font-medium text-zinc-500 my-auto no-underline hover:text-zinc-800"
@@ -52,3 +27,28 @@ function updateRating() {
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import usePostStore from '@/features/postStore'
+import useUserStore from '@/features/userStore'
+import type { IPost } from '@/features/postStore'
+import { ref } from 'vue'
+
+const postStore = usePostStore()
+const userStore = useUserStore()
+const post = defineProps<IPost>()
+const isLiked = ref<boolean>(false)
+
+if (postStore.authToken && userStore.userData) {
+  if (post.rating.includes(userStore.userData.username)) {
+    isLiked.value = true
+  }
+}
+
+const date = new Date(post.date).toString().split(' ').slice(0, -5).toString().replaceAll(',', ' ')
+
+function updateRating() {
+  postStore.updateRating(post._id)
+  console.log('popa')
+}
+</script>
