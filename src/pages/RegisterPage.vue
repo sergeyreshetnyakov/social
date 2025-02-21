@@ -20,7 +20,7 @@ import { Form, Field, ErrorMessage } from 'vee-validate'
 import useUserStore from '../features/userStore.ts'
 import * as yup from 'yup'
 
-const store = useUserStore()
+const user = useUserStore()
 
 const registerSchema = yup.object({
   email: yup.string().required().email(),
@@ -29,6 +29,6 @@ const registerSchema = yup.object({
 })
 
 function submit(values) {
-  store.register(values)
+  user.register(values)
 }
 </script>

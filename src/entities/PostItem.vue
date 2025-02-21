@@ -31,12 +31,12 @@
 <script setup lang="ts">
 import usePostStore from '@/features/postStore'
 import useUserStore from '@/features/userStore'
-import type { IPost } from '@/features/postStore'
+import type { post } from '@/features/postStore'
 import { ref } from 'vue'
 
 const postStore = usePostStore()
 const userStore = useUserStore()
-const post = defineProps<IPost>()
+const post = defineProps<post>()
 const isLiked = ref<boolean>(false)
 
 if (postStore.authToken && userStore.userData) {

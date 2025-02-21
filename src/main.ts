@@ -7,9 +7,10 @@ import { createPinia } from 'pinia'
 import HomeLayout from './pages/HomeLayout.vue'
 import router from './app/router.ts'
 
+const pinia = createPinia()
 const app = createApp(HomeLayout)
 
-app.use(createPinia())
+app.use(pinia)
 app.use(router)
 
 app.mount('#app')
