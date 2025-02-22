@@ -6,24 +6,15 @@
 
 <script setup lang="ts">
 import PostItem from '@/entities/PostItem.vue'
-
-import useDialogStore from '@/shared/lib/dialogStore'
 import usePostStore, { type post } from '@/features/postStore'
-import postNotFound from '@/entities/dialogs/PostNotFound.vue'
 import { ref } from 'vue'
 
-const postStore = usePostStore()
-const dialogStore = useDialogStore()
+const post = usePostStore()
 
 const posts = ref<post[]>()
 const isLoaded = ref<boolean>(false)
 
-function showDialog() {
-  dialogStore.set(postNotFound)
-  console.log(dialogStore.current)
-}
-
-postStore.getAll().then((res) => {
+post.getAll().then((res) => {
   posts.value = res
   isLoaded.value = true
 })

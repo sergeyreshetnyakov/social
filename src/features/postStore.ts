@@ -1,8 +1,8 @@
+import axios from 'axios'
+import useDialogStore from '../shared/lib/dialogStore'
+import useUserStore from './userStore'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import axios from 'axios'
-
-import useDialogStore from '../shared/lib/dialogStore'
 
 const url = 'http://localhost:5000/api/posts/'
 
@@ -31,9 +31,8 @@ export interface post extends createPost {
 }
 
 const usePostStore = defineStore('post', (store) => {
-  const dialogStore = useDialogStore()
-
-  const authToken = ref<string>()
+  const dialog = useDialogStore()
+  const user = useUserStore()
 
   async function getAll(): Promise<post[]> {
     const res = await axios.get<post[]>(url)
@@ -42,47 +41,52 @@ const usePostStore = defineStore('post', (store) => {
   }
 
   async function getById(id: string) {
-    const res = await axios.get<post>(url + id)
-
-    if (res.status !== 200) {
-      return dialogStore.set('PostNotFound')
-    }
+    const res = await axios.get<post>(url + id).catch((err) => {
+      return dialog.setAlert(err.response.data.header, err.response.data.message)
+    })
 
     return res.data
   }
 
-  async function create(post: createComment) {
-    const res = await axios.post(url, post).catch((err) => console.error(err))
+  async function create(post: createPost) {
+    const res = await axios.post(url, post).catch((err) => {
+      return dialog.setAlert(err.response.data.header, err.response.data.message)
+    })
 
-    if (res?.status === 201) {
-      return dialogStore.set('PostCreated')
-    }
+    dialog.setAlert(res.data.header, res.data.message)
+    router.push({ path: '/', replace: true })
   }
 
   async function update(id: string, post: post) {
-    const res = await axios.put(url + id, post)
+    const res = await axios.put(url + id, post).catch((err) => {
+      return dialog.setAlert(err.response.data.header, err.response.data.message)
+    })
 
-    return res.status
+    dialog.setAlert(res.data.header, res.data.message)
   }
 
   async function deleteById(id: string) {
-    const res = await axios.delete(url + id)
+    const res = await axios.delete(url + id).catch((err) => {
+      return dialog.setAlert(err.response.data.header, err.response.data.message)
+    })
 
-    return res.status
+    dialog.setAlert(res.data.header, res.data.message)
   }
 
   async function updateRating(id: string) {
-    const res = await axios.post(url + id)
-
-    return res.status
+    const res = await axios.post(url + id + '/rating').catch((err) => {
+      return dialog.setAlert(err.response.data.header, err.response.data.message)
+    })
   }
 
   async function addComment(id: string, comment: createComment) {
-    const res = await axios.post(url + id + '/comments', comment)
+    const res = await axios.post(url + id + '/comments', comment).catch((err) => {
+      return dialog.setAlert(err.response.data.header, err.response.data.message)
+    })
 
-    return res.status
+    dialog.setAlert(res.data.header, res.data.message)
   }
-  return { getAll, getById, create, update, deleteById, updateRating, addComment, authToken }
+  return { getAll, getById, create, update, deleteById, updateRating, addComment }
 })
 
 export default usePostStore

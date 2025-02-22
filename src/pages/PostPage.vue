@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 import { Form, Field, ErrorMessage } from 'vee-validate'
-import usePostStore from '../features/postStore.ts'
+import usePostStore, { type createPost } from '../features/postStore.ts'
 import * as yup from 'yup'
 
 const postSchema = yup.object({
@@ -37,9 +37,9 @@ const postSchema = yup.object({
   hidden: yup.bool().default(false),
 })
 
-const store = usePostStore()
+const post = usePostStore()
 
 function submit(values) {
-  console.log(values)
+  post.create(values)
 }
 </script>

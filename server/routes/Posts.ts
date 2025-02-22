@@ -6,8 +6,6 @@ import verifyToken from '../middlewares/auth.ts'
 
 const router = Router()
 
-//post routing
-
 router.get('/', async (req, res) => {
   const post = await Post.find().catch((err) => {
     return res.json({ header: 'Error', message: err })

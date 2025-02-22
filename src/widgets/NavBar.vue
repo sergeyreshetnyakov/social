@@ -5,9 +5,7 @@ import { ref } from 'vue'
 import useUserStore from '@/features/userStore.ts'
 
 const user = useUserStore()
-const { isLogedIn, userData } = storeToRefs(user)
-
-console.log(userData.value?.username)
+const { isLogedIn, data: userData } = storeToRefs(user)
 </script>
 
 <template>
