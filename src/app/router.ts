@@ -9,6 +9,11 @@ const router = createRouter({
       component: () => import('../pages/HomePage.vue'),
     },
     {
+      path: '/:username',
+      name: 'user',
+      component: () => import('../pages/UserPage.vue'),
+    },
+    {
       path: '/post',
       name: 'create post',
       component: () => import('../pages/PostPage.vue'),
