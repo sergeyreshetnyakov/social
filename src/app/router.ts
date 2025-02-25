@@ -14,9 +14,14 @@ const router = createRouter({
       component: () => import('../pages/UserPage.vue'),
     },
     {
+      path: '/posts/:postId',
+      name: 'post',
+      component: () => import('../pages/PostPage.vue'),
+    },
+    {
       path: '/post',
       name: 'create post',
-      component: () => import('../pages/PostPage.vue'),
+      component: () => import('../pages/CreatePostPage.vue'),
     },
     {
       path: '/login',

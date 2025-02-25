@@ -4,10 +4,14 @@ import axios from 'axios'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
-interface user {
+export interface createUser {
   username: string
   password: string
   email: string
+}
+
+export interface user extends createUser {
+  description: string
 }
 
 const url = 'http://localhost:5000/api/users/'
@@ -47,10 +51,8 @@ const useUserStore = defineStore('user', () => {
       })
   }
 
-  async function getByEmail(email: string): Promise<{ email: string; username: string }> {
-    const res = await axios.post(url, {
-      email: email,
-    })
+  async function getByUsername(username: string): Promise<user> {
+    const res = await axios.get(url + username)
 
     if (res.status !== 200) {
       dialog.setAlert(res.data.header, res.data.message)
@@ -59,7 +61,7 @@ const useUserStore = defineStore('user', () => {
     return res.data
   }
 
-  return { register, login, getByEmail, data, isLogedIn }
+  return { register, login, getByUsername, data, isLogedIn }
 })
 
 export default useUserStore

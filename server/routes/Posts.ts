@@ -22,6 +22,16 @@ router.get('/id/:id', async (req, res) => {
   res.status(200).json(post)
 })
 
+router.get('/byAuthor/:author', async (req, res) => {
+  const post = await Post.find({ author: req.params.author })
+
+  if (!post) {
+    res.status(404).json({ header: 'Error', message: 'User not found' })
+  }
+
+  res.status(200).json(post)
+})
+
 router.post('/', verifyToken, async (req, res) => {
   const post = new Post({
     author: req.user.username,

@@ -1,10 +1,9 @@
-<!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div class="flex gap-4 mt-4 mb-2">
     <h3 class="text-xl font-medium">{{ props.title }}</h3>
     <RouterLink
       class="text-base font-medium text-zinc-500 my-auto no-underline hover:text-zinc-800"
-      to="/"
+      :to="'/' + props.author"
     >
       {{ props.author }}
     </RouterLink>

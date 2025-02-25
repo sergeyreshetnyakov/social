@@ -46,8 +46,8 @@ router.post('/login', async (req, res) => {
     .json({ token: token, header: 'Success', message: 'You are successfuly login to your account' })
 })
 
-router.post('/', verifyToken, async (req, res) => {
-  const user = await User.findOne({ email: req.user.email })
+router.get('/:username', async (req, res) => {
+  const user = await User.findOne({ username: req.params.username })
 
   if (!user) {
     return res.status(404).json({ header: 'Error', message: 'User not found' })
@@ -55,7 +55,7 @@ router.post('/', verifyToken, async (req, res) => {
 
   res.status(200).json({
     username: user.username,
-    email: user.email,
+    description: user.description,
     header: 'Success',
     message: 'User successfuly founded',
   })

@@ -40,8 +40,16 @@ const usePostStore = defineStore('post', (store) => {
     return res.data
   }
 
-  async function getById(id: string) {
+  async function getById(id: string): Promise<post> {
     const res = await axios.get<post>(url + id).catch((err) => {
+      return dialog.setAlert(err.response.data.header, err.response.data.message)
+    })
+
+    return res.data
+  }
+
+  async function getByAuthor(author: string): Promise<post[]> {
+    const res = await axios.get<post>(url + 'byAuthor/' + author).catch((err) => {
       return dialog.setAlert(err.response.data.header, err.response.data.message)
     })
 
@@ -86,7 +94,7 @@ const usePostStore = defineStore('post', (store) => {
 
     dialog.setAlert(res.data.header, res.data.message)
   }
-  return { getAll, getById, create, update, deleteById, updateRating, addComment }
+  return { getAll, getByAuthor, getById, create, update, deleteById, updateRating, addComment }
 })
 
 export default usePostStore
