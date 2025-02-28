@@ -5,6 +5,7 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 
 import PostsRouter from './routes/Posts.ts'
+import CommentsRouter from './routes/Posts.ts'
 import UsersRouter from './routes/Users.ts'
 
 const app = express()
@@ -29,6 +30,7 @@ mongoose.connection.on('disconnected', () => {
 })
 
 app.use('/api/posts', PostsRouter)
+app.use('/api/posts', CommentsRouter)
 app.use('/api/users', UsersRouter)
 
 app.listen(app.get('port'), () => {
