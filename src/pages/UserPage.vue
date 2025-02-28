@@ -9,8 +9,8 @@
 
 <script setup lang="ts">
 import PostItem from '@/entities/PostItem.vue'
-import useUserStore, { type user } from '@/features/userStore'
-import usePostStore, { type post } from '@/features/postStore'
+import useUserStore, { type user } from '@/shared/api/userStore'
+import usePostStore, { type post } from '@/shared/api/postStore'
 import { useRoute } from 'vue-router'
 import { ref } from 'vue'
 

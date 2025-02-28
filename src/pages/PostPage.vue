@@ -9,12 +9,12 @@
 </template>
 
 <script setup lang="ts">
-import usePostStore, { type post } from '../features/postStore'
+import usePostStore, { type post } from '../shared/api/postStore'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import PostItem from '@/entities/PostItem.vue'
 import CommentItem from '@/entities/CommentItem.vue'
-import CreateComment from '@/entities/CreateComment.vue'
+import CreateComment from '@/widgets/CreateComment.vue'
 
 const post = usePostStore()
 const route = useRoute()

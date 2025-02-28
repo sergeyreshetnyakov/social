@@ -17,10 +17,10 @@
 </template>
 
 <script setup lang="ts">
-import RatingButton from './RatingButton.vue'
-import UserLink from './UserLink.vue'
-import usePostStore from '@/features/postStore'
-import type { post } from '@/features/postStore'
+import RatingButton from '../features/RatingButton.vue'
+import UserLink from '../features/UserLink.vue'
+import usePostStore from '@/shared/api/postStore'
+import type { post } from '@/shared/api/postStore'
 
 const props = defineProps<post>()
 const post = usePostStore()

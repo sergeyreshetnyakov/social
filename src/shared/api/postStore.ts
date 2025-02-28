@@ -1,5 +1,5 @@
 import axios from 'axios'
-import useDialogStore from '../shared/lib/dialogStore'
+import useDialogStore from '../lib/dialogStore'
 import { useRouter } from 'vue-router'
 import { defineStore } from 'pinia'
 
@@ -62,7 +62,7 @@ const usePostStore = defineStore('post', (store) => {
         router.push({ path: '/', replace: true })
       })
       .catch((err) => {
-        return dialog.setAlert(err.response.data.header, err.response.data.message)
+        return dialog.setAlert(err.response?.data.header, err.response?.data.message)
       })
   }
 

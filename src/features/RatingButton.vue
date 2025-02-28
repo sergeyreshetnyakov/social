@@ -10,8 +10,8 @@
 </template>
 
 <script lang="ts" setup>
-import usePostStore from '@/features/postStore'
-import useUserStore from '@/features/userStore'
+import usePostStore from '@/shared/api/postStore'
+import useUserStore from '@/shared/api/userStore'
 import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
 

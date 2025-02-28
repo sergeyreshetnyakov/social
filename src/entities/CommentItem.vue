@@ -13,8 +13,8 @@
 </template>
 
 <script lang="ts" setup>
-import RatingButton from './RatingButton.vue'
-import { type comment } from '@/features/postStore'
+import RatingButton from '../features/RatingButton.vue'
+import { type comment } from '@/shared/api/postStore'
 
 const props = defineProps<comment>()
 const date = new Date(props.date).toString().split(' ').slice(0, -5).toString().replaceAll(',', ' ')
