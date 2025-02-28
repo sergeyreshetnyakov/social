@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { ref } from 'vue'
 import useUserStore from '@/features/userStore.ts'
 
 const user = useUserStore()
@@ -25,7 +24,7 @@ const { isLogedIn, data: userData } = storeToRefs(user)
         <div
           class="my-auto font-semibold underline underline-offset-3 decoration-[1.5px] decoration-white duration-300 ease-in-out hover:decoration-zinc-800"
         >
-          {{ userData.username }}
+          {{ userData?.username }}
         </div>
       </div>
     </div>

@@ -30,5 +30,4 @@ postStore.getByAuthor(route.params.username as string).then((res) => {
   posts.value = res
   isLoaded.value = true
 })
-console.log(posts.value)
 </script>

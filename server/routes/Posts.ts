@@ -122,4 +122,15 @@ router.post('/:id/comments', verifyToken, async (req, res) => {
   res.status(201).json({ header: 'Success', message: 'Your comment successfuly posted' })
 })
 
+router.post('/:postId/comments/:commentId', verifyToken, async (req, res) => {
+  const post = await Post.findById(req.params.postId)
+
+  const isLiked = post?.comments.find((comment) => {
+    return comment.author === req.user.username
+  })
+
+  if (isLiked) {
+  }
+})
+
 export default router

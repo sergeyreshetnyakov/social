@@ -1,6 +1,10 @@
 <template>
   <div :v-if="isLoaded">
-    <post-item v-for="post in posts" :key="post._id" v-bind="post" :hidden="false" />
+    <post-item v-bind="postData" :hidden="false" />
+    <div class="mt-16">
+      <create-comment :_id="postData._id" />
+      <comment-item v-for="comment in postData?.comments" :key="comment._id" v-bind="comment" />
+    </div>
   </div>
 </template>
 
@@ -9,6 +13,8 @@ import usePostStore, { type post } from '../features/postStore'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import PostItem from '@/entities/PostItem.vue'
+import CommentItem from '@/entities/CommentItem.vue'
+import CreateComment from '@/entities/CreateComment.vue'
 
 const post = usePostStore()
 const route = useRoute()
