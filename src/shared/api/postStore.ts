@@ -1,9 +1,30 @@
+<<<<<<< HEAD
 import { useRouter } from 'vue-router'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
 import useDialogStore from '@/shared/lib/dialogStore'
 import { type comment } from './commentStore'
+=======
+import axios from 'axios'
+import useDialogStore from '../lib/dialogStore'
+import { useRouter } from 'vue-router'
+import { defineStore } from 'pinia'
+
+const url = 'http://localhost:5000/api/posts/'
+const router = useRouter()
+
+export interface createComment {
+  content: String
+  rating: Array<string>
+}
+
+export interface comment extends createComment {
+  author: String
+  date: Date
+  _id: string
+}
+>>>>>>> a0c0619be0f0a08b8608abcd7e02eaa37fdf3ae0
 
 export interface createPost {
   title: string
@@ -21,6 +42,7 @@ export interface post extends createPost {
 
 const usePostStore = defineStore('post', (store) => {
   const dialog = useDialogStore()
+<<<<<<< HEAD
   const router = useRouter()
   const url = 'http://localhost:5000/api/posts/'
 
@@ -29,6 +51,13 @@ const usePostStore = defineStore('post', (store) => {
 
     if (res) return res.data
     else return dialog.setAlert('Error', 'Server is broken')
+=======
+
+  async function getAll(): Promise<post[]> {
+    const res = await axios.get<post[]>(url)
+
+    return res.data
+>>>>>>> a0c0619be0f0a08b8608abcd7e02eaa37fdf3ae0
   }
 
   async function getById(id: string): Promise<post | void> {
@@ -52,19 +81,35 @@ const usePostStore = defineStore('post', (store) => {
         dialog.setAlert(res.data.header, res.data.message)
         router.push({ path: '/', replace: true })
       })
+<<<<<<< HEAD
       .catch((err) => dialog.setAlert(err.response.data.header, err.response.data.message))
+=======
+      .catch((err) => {
+        return dialog.setAlert(err.response?.data.header, err.response?.data.message)
+      })
+>>>>>>> a0c0619be0f0a08b8608abcd7e02eaa37fdf3ae0
   }
 
   async function update(id: string, post: post): Promise<void> {
     await axios
       .put(url + id, post)
+<<<<<<< HEAD
       .then((res) => dialog.setAlert(res.data.header, res.data.message))
       .catch((err) => dialog.setAlert(err.response.data.header, err.response.data.message))
+=======
+      .then((res) => {
+        dialog.setAlert(res.data.header, res.data.message)
+      })
+      .catch((err) => {
+        return dialog.setAlert(err.response.data.header, err.response.data.message)
+      })
+>>>>>>> a0c0619be0f0a08b8608abcd7e02eaa37fdf3ae0
   }
 
   async function deleteById(id: string): Promise<void> {
     await axios
       .delete(url + id)
+<<<<<<< HEAD
       .then((res) => dialog.setAlert(res.data.header, res.data.message))
       .catch((err) => dialog.setAlert(err.response.data.header, err.response.data.message))
   }
@@ -76,6 +121,35 @@ const usePostStore = defineStore('post', (store) => {
   }
 
   return { getAll, getByAuthor, getById, create, update, deleteById, updateRating }
+=======
+      .then((res) => {
+        dialog.setAlert(res.data.header, res.data.message)
+      })
+      .catch((err) => {
+        return dialog.setAlert(err.response.data.header, err.response.data.message)
+      })
+  }
+
+  async function updateRating(id: string) {
+    await axios.post(url + id + '/rating').catch((err) => {
+      return dialog.setAlert(err.response.data.header, err.response.data.message)
+    })
+  }
+
+  async function updateCommentRating() {}
+
+  async function createComment(id: string, comment: createComment) {
+    await axios
+      .post(url + id + '/comments', comment)
+      .then((res) => {
+        dialog.setAlert(res.data.header, res.data.message)
+      })
+      .catch((err) => {
+        return dialog.setAlert(err.response.data.header, err.response.data.message)
+      })
+  }
+  return { getAll, getByAuthor, getById, create, update, deleteById, updateRating, createComment }
+>>>>>>> a0c0619be0f0a08b8608abcd7e02eaa37fdf3ae0
 })
 
 export default usePostStore

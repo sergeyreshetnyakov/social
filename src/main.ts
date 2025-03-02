@@ -1,4 +1,4 @@
-import './shared/main.css'
+import './shared/ui/main.css'
 import 'primeicons/primeicons.css'
 
 import { createApp } from 'vue'

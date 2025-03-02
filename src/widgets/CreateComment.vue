@@ -18,7 +18,11 @@
 
 <script setup lang="ts">
 import { Form, Field, ErrorMessage } from 'vee-validate'
+<<<<<<< HEAD
 import useCommentStore from '@/shared/api/commentStore'
+=======
+import usePostStore from '@/shared/api/postStore'
+>>>>>>> a0c0619be0f0a08b8608abcd7e02eaa37fdf3ae0
 import * as yup from 'yup'
 
 const props = defineProps<{ _id: string }>()
