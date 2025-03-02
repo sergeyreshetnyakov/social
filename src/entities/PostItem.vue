@@ -5,7 +5,7 @@
   </div>
   <p>{{ props.content }}</p>
   <div class="flex gap-2 mt-2">
-    <rating-button :postId="props" :commentId="props._id" :rating="props.rating" type="post" />
+    <rating-button :postId="props._id" :rating="props.rating" type="post" />
     <router-link class="flex gap-2 button-inline hover:bg-blue-300" :to="'/posts/' + props._id">
       <i class="pi pi-comment text-xl my-auto"></i>
       <span class="text-xl font-semibold">{{ props.comments.length }}</span>

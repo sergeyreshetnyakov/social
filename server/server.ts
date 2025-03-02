@@ -13,7 +13,7 @@ dotenv.config()
 app.set('port', process.env.PORT)
 app.use(express.json())
 app.use(cors())
-app.use(morgan('dev'))
+app.use(morgan('tiny'))
 
 mongoose.connect(process.env.DB_PORT as string)
 
@@ -27,6 +27,8 @@ mongoose.connection.on('error', (err) => {
 mongoose.connection.on('disconnected', () => {
   console.log('[INFO] MongoDB is disconnected')
 })
+
+app.use(express.static('dist'))
 
 app.use('/api/posts', PostsRouter)
 app.use('/api/users', UsersRouter)

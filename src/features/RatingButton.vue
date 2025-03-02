@@ -26,6 +26,7 @@ interface props {
 
 const props = defineProps<props>()
 const isLiked = ref<boolean>(false)
+const rating = ref<Array<string>>(props.rating)
 
 const post = usePostStore()
 const comment = useCommentStore()
@@ -34,21 +35,21 @@ const user = useUserStore()
 const { data: userData } = storeToRefs(user)
 
 if (userData.value?.username) {
-  if (props.rating.includes(userData.value?.username)) {
+  if (rating.value.includes(userData.value?.username)) {
     isLiked.value = true
   } else isLiked.value = false
 }
 
 function updateRating() {
   if (props.type === 'post') post.updateRating(props.postId)
-  else comment.updateRating(props.postId, props.commentId)
+  else comment.updateRating(props.postId, props?.commentId)
 
   if (userData.value) {
     isLiked.value = !isLiked.value
     if (isLiked.value) {
-      props.rating = props.rating.push(userData.value?.username)
+      rating.value = rating.value.push(userData.value?.username)
     } else {
-      props.rating = props.rating.pop()
+      rating.value = rating.value.pop()
     }
   }
 }

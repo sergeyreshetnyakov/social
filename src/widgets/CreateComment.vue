@@ -18,16 +18,18 @@
 
 <script setup lang="ts">
 import { Form, Field, ErrorMessage } from 'vee-validate'
-import usePostStore from '@/shared/api/postStore'
+import useCommentStore from '@/shared/api/commentStore'
 import * as yup from 'yup'
 
 const props = defineProps<{ _id: string }>()
+
 const CommentSchema = yup.object({
   content: yup.string().required().min(10),
 })
 
-const post = usePostStore()
+const comment = useCommentStore()
+
 function submit(values) {
-  post.createComment(props._id, values)
+  comment.create(props._id, values)
 }
 </script>

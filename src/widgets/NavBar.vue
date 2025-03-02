@@ -24,7 +24,7 @@ const { isLogedIn, data: userData } = storeToRefs(user)
         <div
           class="my-auto font-semibold underline underline-offset-3 decoration-[1.5px] decoration-white duration-300 ease-in-out hover:decoration-zinc-800"
         >
-          {{ userData?.username }}
+          <router-link :to="userData?.username">{{ userData?.username }}</router-link>
         </div>
       </div>
     </div>

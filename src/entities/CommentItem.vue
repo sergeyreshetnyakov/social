@@ -6,7 +6,7 @@
   <p>{{ props.content }}</p>
   <div class="flex gap-2 mt-2">
     <rating-button
-      :postId="props.postId"
+      :postId="props.postId.toString()"
       :commentId="props._id"
       :rating="props.rating"
       type="comment"
