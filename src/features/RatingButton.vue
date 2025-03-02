@@ -10,12 +10,12 @@
 </template>
 
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia'
-import { ref } from 'vue'
-
 import usePostStore from '@/shared/api/postStore'
 import useUserStore from '@/shared/api/userStore'
 import useCommentStore from '@/shared/api/commentStore'
+
+import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
 
 interface props {
   type: 'post' | 'comment'
