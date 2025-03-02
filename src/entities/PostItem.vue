@@ -5,7 +5,7 @@
   </div>
   <p>{{ props.content }}</p>
   <div class="flex gap-2 mt-2">
-    <rating-button :_id="props._id" :rating="props.rating" />
+    <rating-button :postId="props" :commentId="props._id" :rating="props.rating" type="post" />
     <router-link class="flex gap-2 button-inline hover:bg-blue-300" :to="'/posts/' + props._id">
       <i class="pi pi-comment text-xl my-auto"></i>
       <span class="text-xl font-semibold">{{ props.comments.length }}</span>
@@ -17,10 +17,10 @@
 </template>
 
 <script setup lang="ts">
-import RatingButton from './RatingButton.vue'
-import UserLink from './UserLink.vue'
-import usePostStore from '@/features/postStore'
-import type { post } from '@/features/postStore'
+import RatingButton from '@/features/RatingButton.vue'
+import UserLink from '@/features/UserLink.vue'
+import usePostStore from '@/shared/api/postStore'
+import type { post } from '@/shared/api/postStore'
 
 const props = defineProps<post>()
 const post = usePostStore()

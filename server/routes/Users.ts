@@ -3,9 +3,8 @@ import { sign } from 'jsonwebtoken'
 import { Router } from 'express'
 
 import User from '../models/User.ts'
-import verifyToken from '../middlewares/auth.ts'
 
-const router = new Router()
+const router = Router()
 
 router.post('/register', async (req, res) => {
   const existingEmail = await User.findOne({ email: req.body.email })

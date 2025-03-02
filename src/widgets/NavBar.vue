@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import useUserStore from '@/features/userStore.ts'
+import useUserStore from '@/shared/api/userStore'
 
 const user = useUserStore()
 const { isLogedIn, data: userData } = storeToRefs(user)

@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import PostItem from '@/entities/PostItem.vue'
-import usePostStore, { type post } from '@/features/postStore'
+import usePostStore, { type post } from '@/shared/api/postStore'
 import { ref } from 'vue'
 
 const post = usePostStore()

@@ -10,21 +10,28 @@
 </template>
 
 <script lang="ts" setup>
-import usePostStore from '@/features/postStore'
-import useUserStore from '@/features/userStore'
 import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
 
+import usePostStore from '@/shared/api/postStore'
+import useUserStore from '@/shared/api/userStore'
+import useCommentStore from '@/shared/api/commentStore'
+
 interface props {
-  _id: string
+  type: 'post' | 'comment'
   rating: Array<string>
+  postId: string
+  commentId: string | undefined
 }
+
 const props = defineProps<props>()
+const isLiked = ref<boolean>(false)
 
 const post = usePostStore()
+const comment = useCommentStore()
 const user = useUserStore()
+
 const { data: userData } = storeToRefs(user)
-const isLiked = ref<boolean>(false)
 
 if (userData.value?.username) {
   if (props.rating.includes(userData.value?.username)) {
@@ -33,7 +40,9 @@ if (userData.value?.username) {
 }
 
 function updateRating() {
-  post.updateRating(props._id)
+  if (props.type === 'post') post.updateRating(props.postId)
+  else comment.updateRating(props.postId, props.commentId)
+
   if (userData.value) {
     isLiked.value = !isLiked.value
     if (isLiked.value) {

@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 import { Form, Field, ErrorMessage } from 'vee-validate'
-import usePostStore, { type createPost } from '../features/postStore.ts'
+import usePostStore, { type createPost } from '@/shared/api/postStore.ts'
 import * as yup from 'yup'
 
 const postSchema = yup.object({

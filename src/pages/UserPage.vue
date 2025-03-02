@@ -9,24 +9,25 @@
 
 <script setup lang="ts">
 import PostItem from '@/entities/PostItem.vue'
-import useUserStore, { type user } from '@/features/userStore'
-import usePostStore, { type post } from '@/features/postStore'
+import useUserStore, { type user } from '@/shared/api/userStore'
+import usePostStore, { type post } from '@/shared/api/postStore'
+
 import { useRoute } from 'vue-router'
 import { ref } from 'vue'
 
-const userStore = useUserStore()
-const postStore = usePostStore()
+const user = useUserStore()
+const post = usePostStore()
 const route = useRoute()
 
 const userData = ref<user>()
 const posts = ref<post[]>()
 const isLoaded = ref<boolean>(false)
 
-userStore.getByUsername(route.params.username as string).then((res) => {
+user.getByUsername(route.params.username as string).then((res) => {
   userData.value = res
 })
 
-postStore.getByAuthor(route.params.username as string).then((res) => {
+post.getByAuthor(route.params.username as string).then((res) => {
   posts.value = res
   isLoaded.value = true
 })

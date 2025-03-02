@@ -5,7 +5,12 @@
   </div>
   <p>{{ props.content }}</p>
   <div class="flex gap-2 mt-2">
-    <rating-button :_id="props._id" :rating="props.rating" />
+    <rating-button
+      :postId="props.postId"
+      :commentId="props._id"
+      :rating="props.rating"
+      type="comment"
+    />
     <div class="flex ml-auto gap-1">
       <span class="font-medium text-zinc-700">{{ date }}</span>
     </div>
@@ -13,8 +18,8 @@
 </template>
 
 <script lang="ts" setup>
-import RatingButton from './RatingButton.vue'
-import { type comment } from '@/features/postStore'
+import RatingButton from '@/features/RatingButton.vue'
+import { type comment } from '@/shared/api/commentStore'
 
 const props = defineProps<comment>()
 const date = new Date(props.date).toString().split(' ').slice(0, -5).toString().replaceAll(',', ' ')

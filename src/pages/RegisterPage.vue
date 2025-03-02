@@ -17,8 +17,9 @@
 
 <script setup lang="ts">
 import { Form, Field, ErrorMessage } from 'vee-validate'
-import useUserStore from '../features/userStore.ts'
 import * as yup from 'yup'
+
+import useUserStore from '@/shared/api/userStore.ts'
 
 const user = useUserStore()
 

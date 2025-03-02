@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { Form, Field, ErrorMessage } from 'vee-validate'
-import usePostStore from '@/features/postStore'
+import usePostStore from '@/shared/api/postStore'
 import * as yup from 'yup'
 
 const props = defineProps<{ _id: string }>()
