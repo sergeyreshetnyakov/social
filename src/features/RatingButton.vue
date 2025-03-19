@@ -21,7 +21,7 @@ interface props {
   type: 'post' | 'comment'
   rating: Array<string>
   postId: string
-  commentId: string | undefined
+  commentId: string
 }
 
 const props = defineProps<props>()
@@ -42,14 +42,14 @@ if (userData.value?.username) {
 
 function updateRating() {
   if (props.type === 'post') post.updateRating(props.postId)
-  else comment.updateRating(props.postId, props?.commentId)
+  else comment.updateRating(props.postId, props.commentId)
 
   if (userData.value) {
     isLiked.value = !isLiked.value
     if (isLiked.value) {
-      rating.value = rating.value.push(userData.value?.username)
+      rating.value.push(userData.value?.username)
     } else {
-      rating.value = rating.value.pop()
+      rating.value.pop()
     }
   }
 }

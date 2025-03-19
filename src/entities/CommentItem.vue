@@ -22,5 +22,5 @@ import RatingButton from '@/features/RatingButton.vue'
 import { type comment } from '@/shared/api/commentStore'
 
 const props = defineProps<comment>()
-const date = new Date(props.date).toString().split(' ').slice(0, -5).toString().replaceAll(',', ' ')
+const date = new Date(props.date).toLocaleDateString()
 </script>

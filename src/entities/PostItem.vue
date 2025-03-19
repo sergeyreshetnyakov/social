@@ -5,7 +5,7 @@
   </div>
   <p>{{ props.content }}</p>
   <div class="flex gap-2 mt-2">
-    <rating-button :postId="props._id" :rating="props.rating" type="post" />
+    <rating-button type="post" :rating="props.rating" :postId="props._id" commentId="none" />
     <router-link class="flex gap-2 button-inline hover:bg-blue-300" :to="'/posts/' + props._id">
       <i class="pi pi-comment text-xl my-auto"></i>
       <span class="text-xl font-semibold">{{ props.comments.length }}</span>
@@ -24,5 +24,5 @@ import type { post } from '@/shared/api/postStore'
 
 const props = defineProps<post>()
 const post = usePostStore()
-const date = new Date(props.date).toString().split(' ').slice(0, -5).toString().replaceAll(',', ' ')
+const date = new Date(props.date).toLocaleDateString()
 </script>

@@ -6,8 +6,8 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import useDialogStore from '../lib/dialogStore'
+import useAlertStore from '../lib/alertStore'
 
-const store = useDialogStore()
+const store = useAlertStore()
 const { current } = storeToRefs(store)
 </script>

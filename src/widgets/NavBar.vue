@@ -2,9 +2,15 @@
 import { RouterLink } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import useUserStore from '@/shared/api/userStore'
+import { ref } from 'vue'
 
 const user = useUserStore()
+const userLink = ref<string>("none")
+
 const { isLogedIn, data: userData } = storeToRefs(user)
+
+if (userData.value) userLink.value = userData.value?.username
+
 </script>
 
 <template>
@@ -24,7 +30,7 @@ const { isLogedIn, data: userData } = storeToRefs(user)
         <div
           class="my-auto font-semibold underline underline-offset-3 decoration-[1.5px] decoration-white duration-300 ease-in-out hover:decoration-zinc-800"
         >
-          <router-link :to="userData?.username">{{ userData?.username }}</router-link>
+          <router-link :to="userLink">{{ userData?.username }}</router-link>
         </div>
       </div>
     </div>

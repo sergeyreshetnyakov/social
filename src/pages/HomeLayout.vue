@@ -1,11 +1,11 @@
 <template>
   <nav-bar />
-  <dialog-provider />
+  <alert-provider />
   <router-view />
 </template>
 
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import NavBar from '@/widgets/NavBar.vue'
-import DialogProvider from '@/shared/ui/DialogProvider.vue'
+import alertProvider from '@/shared/ui/alertProvider.vue'
 </script>

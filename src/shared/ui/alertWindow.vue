@@ -1,5 +1,5 @@
 <template>
-  <dialog id="dialog" class="border rounded-lg py-2 px-3 mx-auto mt-[20vh]" open>
+  <dialog id="alert" class="border rounded-lg py-2 px-3 mx-auto mt-[20vh]" open>
     <div class="flex justify-between">
       <h2 class="text-lg font-semibold">
         <slot name="header"></slot>
@@ -20,12 +20,13 @@
 </template>
 
 <script setup lang="ts">
-import useDialogStore from '../lib/dialogStore'
+import useAlertStore from '../lib/alertStore'
 
-const store = useDialogStore()
+const store = useAlertStore()
 
 const close = () => {
-  document.getElementById('dialog')?.close()
-  store.set(undefined)
+  const alert  = document.getElementById('dialog') as HTMLDialogElement
+  alert.close()
+  store.reset()
 }
 </script>

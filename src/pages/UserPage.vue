@@ -28,7 +28,7 @@ user.getByUsername(route.params.username as string).then((res) => {
 })
 
 post.getByAuthor(route.params.username as string).then((res) => {
-  posts.value = res
+  if(res) posts.value = res
   isLoaded.value = true
 })
 </script>

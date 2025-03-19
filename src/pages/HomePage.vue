@@ -6,13 +6,17 @@ import { ref } from 'vue'
 const isLoaded = ref<boolean>(false)
 
 const post = usePostStore()
-const posts = post.getAll().then(() => (isLoaded.value = true))
+const posts = ref<post[]>()
 
-console.log(posts)
+post.getAll().then((res) => {
+  posts.value = res
+  isLoaded.value = true
+})
+
 </script>
 
 <template>
   <div v-if="isLoaded">
-    <post-item v-for="item in posts" :key="item._id" v-bind="item" />
+    <post-item v-for="item in posts" v-bind="item" :key="item._id" />
   </div>
 </template>

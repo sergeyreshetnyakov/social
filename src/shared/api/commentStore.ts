@@ -2,14 +2,14 @@ import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
 
 import axios from 'axios'
-import useDialogStore from '@/shared/lib/dialogStore'
+import useAlertStore from '@/shared/lib/alertStore'
 
 export interface createComment {
   content: String
-  rating: Array<string>
 }
 
 export interface comment extends createComment {
+  rating: Array<string>
   author: String
   date: Date
   postId: string
@@ -18,7 +18,7 @@ export interface comment extends createComment {
 
 const useCommentStore = defineStore('comment', () => {
   const url = 'http://localhost:5000/api/posts/'
-  const dialog = useDialogStore()
+  const alert = useAlertStore()
   const router = useRouter()
 
   async function create(id: string, comment: createComment) {
@@ -26,15 +26,15 @@ const useCommentStore = defineStore('comment', () => {
       .post(url + id + '/comments', comment)
       .then((res) => {
         router.go(0)
-        dialog.setAlert(res.data.header, res.data.message)
+        alert.set(res.data.header, res.data.message)
       })
-      .catch((err) => dialog.setAlert(err.response.data.header, err.response.data.message))
+      .catch((err) => alert.set(err.response.data.header, err.response.data.message))
   }
 
   async function updateRating(postId: string, commentId: string) {
     await axios
       .post(url + postId + '/comments/rating/' + commentId)
-      .catch((err) => dialog.setAlert(err.response.data.header, err.response.data.message))
+      .catch((err) => alert.set(err.response.data.header, err.response.data.message))
   }
 
   return { create, updateRating }

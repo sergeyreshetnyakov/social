@@ -1,6 +1,6 @@
 <template>
   <div :v-if="isLoaded">
-    <post-item v-bind="postData" :hidden="false" />
+    <post-item v-bind="postData"/>
     <div class="mt-16">
       <create-comment :_id="postData._id" />
       <comment-item
@@ -25,10 +25,20 @@ import { useRoute } from 'vue-router'
 const post = usePostStore()
 const route = useRoute()
 
-const postData = ref<post>()
 const isLoaded = ref<boolean>(false)
+const postData = ref<post>({
+  _id: 'none',
+  title: 'none',
+  content: 'none',
+  author: 'none',
+  date: 'none',
+  rating: ['none'],
+  comments: [],
+  hidden: true
+})
 
 post.getById(route.params.postId as string).then((res) => {
   postData.value = res
+  isLoaded.value = true
 })
 </script>

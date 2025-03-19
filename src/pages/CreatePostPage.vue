@@ -1,45 +1,56 @@
 <template>
-  <Form class="flex flex-col mt-[8vh] gap-4" @submit="submit" :validation-schema="postSchema">
+  <form @submit="onSubmit">
     <h1 class="text-lg font-semibold flex justify-center">Create Post</h1>
 
     <div class="flex flex-col">
-      <Field
+      <input
         name="title"
         placeholder="Title"
         class="outline-none p-2 border border-dashed rounded-lg"
+        v-model="title"
+        v-bind="titleAttrs"
       />
-      <ErrorMessage name="title" class="p-2" />
+      <label name="title" class="p-2"></label>
     </div>
 
     <div>
-      <Field name="content" v-slot="{ field }">
-        <textarea
-          placeholder="Content"
-          v-bind="field"
-          class="w-full h-[16vh] p-2 outline-none border border-dashed rounded-lg"
-        ></textarea>
-      </Field>
-      <ErrorMessage name="content" class="p-2" />
+      <textarea
+        name="content"
+        placeholder="Content"
+        class="w-full h-[16vh] p-2 outline-none border border-dashed rounded-lg"
+        v-model="content"
+        v-bind="contentAttrs"
+      ></textarea>
+      <label></label>
     </div>
 
     <button class="button-solid mt-6" type="submit">Submit</button>
-  </Form>
+  </form>
 </template>
 
 <script setup lang="ts">
-import { Form, Field, ErrorMessage } from 'vee-validate'
-import usePostStore, { type createPost } from '@/shared/api/postStore.ts'
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/yup'
+import usePostStore from '@/shared/api/postStore.ts'
 import * as yup from 'yup'
 
-const postSchema = yup.object({
-  title: yup.string().required().min(3),
-  content: yup.string().required().min(10),
-  hidden: yup.bool().default(false),
+const { handleSubmit, defineField } = useForm({
+  validationSchema: toTypedSchema(
+    yup.object({
+      title: yup.string().required().min(3),
+      content: yup.string().required().min(10),
+      hidden: yup.bool().default(false),
+    }),
+  ),
 })
+
+const [title, titleAttrs] = defineField('title')
+const [content, contentAttrs] = defineField('content')
+const [hidden, hiddenAttrs] = defineField('hidden')
 
 const post = usePostStore()
 
-function submit(values) {
-  post.create(values)
-}
+const onSubmit = handleSubmit((submitted) => {
+  post.create(submitted)
+})
 </script>
