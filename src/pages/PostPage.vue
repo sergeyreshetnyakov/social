@@ -1,14 +1,16 @@
 <template>
   <div :v-if="isLoaded">
-    <post-item v-bind="postData"/>
+    <post-item v-if="postData" v-bind="postData"/>
     <div class="mt-16">
-      <create-comment :_id="postData._id" />
-      <comment-item
-        v-for="comment in postData?.comments"
-        :key="comment._id"
-        v-bind="comment"
-        :postId="postData._id"
-      />
+      <create-comment v-if="postData" :_id="postData._id" />
+      <div v-if="postData">
+        <comment-item
+          v-for="comment in postData.comments"
+          v-bind="comment"
+          :key="comment._id"
+          :postId="postData._id"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -26,19 +28,10 @@ const post = usePostStore()
 const route = useRoute()
 
 const isLoaded = ref<boolean>(false)
-const postData = ref<post>({
-  _id: 'none',
-  title: 'none',
-  content: 'none',
-  author: 'none',
-  date: 'none',
-  rating: ['none'],
-  comments: [],
-  hidden: true
-})
+const postData = ref<post>()
 
 post.getById(route.params.postId as string).then((res) => {
-  postData.value = res
+  if(res) postData.value = res
   isLoaded.value = true
 })
 </script>

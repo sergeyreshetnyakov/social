@@ -37,7 +37,7 @@ router.post('/', verifyToken, async (req, res) => {
     author: req.user.username,
     title: req.body.title,
     content: req.body.content,
-    date: Date.now(),
+    date: new Date(Date.now()).toLocaleDateString(),
     hidden: req.body.hidden,
     comments: [],
     rating: [],
@@ -107,7 +107,7 @@ router.post('/:id/comments', verifyToken, async (req, res) => {
   const comment = new Comment({
     author: req.user.username,
     content: req.body.content,
-    date: Date.now(),
+    date: new Date(Date.now()).toLocaleDateString(),
     rating: [],
   })
 

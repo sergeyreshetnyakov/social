@@ -8,7 +8,6 @@ import { type comment } from './commentStore'
 export interface createPost {
   title: string
   content: string
-  hidden: boolean
 }
 
 export interface post extends createPost {
@@ -30,12 +29,12 @@ const usePostStore = defineStore('post', (store) => {
     return res.data
   }
 
-  async function getById(id: string): Promise<post> {
+  async function getById(id: string): Promise<post | void> {
     const res = await axios.get<post>(url + 'id/' + id)
 
-    if (res === undefined) alert.set('Error', 'Post not found')
+    if (res) return res.data
+    else alert.set('Error', 'Post not found')
 
-    return res.data
   }
 
   async function getByAuthor(author: string): Promise<post[] | void> {

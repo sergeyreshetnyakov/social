@@ -25,7 +25,7 @@ import useAlertStore from '../lib/alertStore'
 const store = useAlertStore()
 
 const close = () => {
-  const alert  = document.getElementById('dialog') as HTMLDialogElement
+  const alert  = document.getElementById('alert') as HTMLDialogElement
   alert.close()
   store.reset()
 }

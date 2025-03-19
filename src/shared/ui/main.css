@@ -2,7 +2,7 @@
 
 @layer base {
   body {
-    @apply mx-[25vw];
+    @apply mx-[5vw] mb-[5vh] md:mx-[vw] lg:mx-[10vw] xl:mx-[15vw] 2xl:mx-[25vw] overflow-x-clip;
   }
 
   nav {
@@ -37,5 +37,9 @@
 
   .auth-error {
     @apply text-neutral-600 mb-2;
+  }
+
+  .auth-submit {
+    @apply mx-auto
   }
 }

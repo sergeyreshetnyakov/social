@@ -5,13 +5,13 @@ import axios from 'axios'
 import useAlertStore from '@/shared/lib/alertStore'
 
 export interface createComment {
-  content: String
+  content: string
 }
 
 export interface comment extends createComment {
   rating: Array<string>
-  author: String
-  date: Date
+  author: string
+  date: string
   postId: string
   _id: string
 }

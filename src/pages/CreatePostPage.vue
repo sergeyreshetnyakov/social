@@ -10,7 +10,7 @@
         v-model="title"
         v-bind="titleAttrs"
       />
-      <label name="title" class="p-2"></label>
+      <label name="title" class="p-2">{{ errors.title }}</label>
     </div>
 
     <div>
@@ -21,7 +21,7 @@
         v-model="content"
         v-bind="contentAttrs"
       ></textarea>
-      <label></label>
+      <label>{{ errors.content }}</label>
     </div>
 
     <button class="button-solid mt-6" type="submit">Submit</button>
@@ -34,19 +34,17 @@ import { toTypedSchema } from '@vee-validate/yup'
 import usePostStore from '@/shared/api/postStore.ts'
 import * as yup from 'yup'
 
-const { handleSubmit, defineField } = useForm({
+const { handleSubmit, defineField, errors } = useForm({
   validationSchema: toTypedSchema(
     yup.object({
       title: yup.string().required().min(3),
-      content: yup.string().required().min(10),
-      hidden: yup.bool().default(false),
+      content: yup.string().required().min(10).max(420),
     }),
   ),
 })
 
 const [title, titleAttrs] = defineField('title')
 const [content, contentAttrs] = defineField('content')
-const [hidden, hiddenAttrs] = defineField('hidden')
 
 const post = usePostStore()
 

@@ -5,7 +5,7 @@ export const PostSchema = new Schema({
   author: String,
   title: String,
   content: String,
-  date: Date,
+  date: String,
   hidden: Boolean,
   rating: Array,
   comments: [CommentSchema],

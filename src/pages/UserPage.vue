@@ -1,8 +1,7 @@
 <template>
-  <h1 class="text-lg font-semibold flex justify-center">{{ userData?.username }}</h1>
+  <h1 class="text-lg font-semibold flex justify-center">{{ userData?.username + "'s posts" }}</h1>
   <p class="flex justify-center">{{ userData?.description }}</p>
   <div class="mt-6" :v-if="isLoaded">
-    <h1 class="flex justify-center font-semibold text-xl">Posts</h1>
     <post-item v-for="post in posts" :key="post._id" v-bind="post" :hidden="false" />
   </div>
 </template>

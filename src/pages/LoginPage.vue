@@ -8,7 +8,7 @@
     <input name="password" class="auth-field" placeholder="Password" v-model="password" v-bind="passwordAttrs"/>
     <label class="auth-error">{{errors.password}}</label>
 
-    <button class="button-solid mt-6" type="submit">Submit</button>
+    <button class="button-solid mt-6" type="submit">Login</button>
   </form>
 </template>
 

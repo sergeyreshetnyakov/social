@@ -4,7 +4,7 @@ export const CommentSchema = new Schema({
   author: String,
   content: String,
   rating: Array,
-  date: Date,
+  date: String,
 })
 
 export default model('Comment', CommentSchema)
